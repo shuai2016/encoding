@@ -2,26 +2,39 @@ import java.io.UnsupportedEncodingException;
 
 public class Encoding {
     public static void main(String[] args) throws UnsupportedEncodingException {
-        String s = "你好";
-        //byte[] bytes = s.getBytes("iso-8859-1");
-        byte[] bytes = s.getBytes("gbk");
+
+        String str = "联通";
+        byte[] bytes = str.getBytes("GBK");
         for (byte aByte : bytes) {
-            System.out.println(aByte);
+            System.out.print(aByte + "、");
         }
-        String s1 = new String(bytes);
-        System.out.println(s1);
-        String def = "?";
-        byte[] bytes1 = def.getBytes();
-        for (byte b : bytes1) {
-            System.out.println(b);
+        //控制台打印：-63、-86、-51、-88、
+        System.out.println();
+        //使用字节数组
+        byte[] b = new byte[]{-63,-86,-51,-88};
+        //使用iso-8859-1编码
+        String s = new String(b,"iso-8859-1");
+        System.out.println(s);
+        //控制台打印：ÁªÍ¨
+        byte[] bytes1 = s.getBytes("iso-8859-1");
+        for (byte b1 : bytes1) {
+            System.out.print(b1 + "、");
         }
-
-
-        String s2 = "abc";
-        byte[] gbks = s2.getBytes("gbk");
-        for (byte gbk : gbks) {
-            System.out.println(gbk);
-        }
-
+        //控制台打印：-63、-86、-51、-88、
+        //虽然中间的字符不认识，但是并不会改变编码
+        System.out.println();
     }
+
+    /**
+     * 把byte转为字符串的bit
+     */
+    public static String byteToBit(byte b) {
+        return
+                ""
+                        + (byte) ((b >> 7) & 0x1) + (byte) ((b >> 6) & 0x1)
+                        + (byte) ((b >> 5) & 0x1) + (byte) ((b >> 4) & 0x1)
+                        + (byte) ((b >> 3) & 0x1) + (byte) ((b >> 2) & 0x1)
+                        + (byte) ((b >> 1) & 0x1) + (byte) ((b) & 0x1);
+    }
+
 }
